@@ -21,16 +21,17 @@ This project bridges that gap by completing the "protocol triangle" - enabling a
              (Open)  /                    \ (POC)
                     /                      \
                    v                        v
-        A2A (Google)  ←────────────────→  ACP (Agentcy)
-       Agent-to-Agent      Future Work     Agent Connect
-        Protocol           (A2A-ACP)       Protocol + Identity
+        A2A (Google)  ←────────────────→  ACP (Linux Foundation)
+       Agent-to-Agent      Future Work     Agent Connect Protocol
+        Protocol           (A2A-ACP)       (Agentcy + W3C Standards)
 ```
 
 **What this enables:**
-- MCP filesystem tools → accessible via ACP REST API
+- **Mozilla AI tools** (MCP) ↔ **Linux Foundation standards** (ACP)
+- **Google protocols** (A2A) ↔ **Open multi-agent infrastructure**
 - Enterprise authentication through W3C DIDs  
 - Complete async architecture for production scale
-- Any protocol can reach any other protocol
+- Breaking down AI agent silos across major foundations
 
 ## Technical Architecture
 
@@ -61,10 +62,11 @@ This work builds on strategic contributions across the Mozilla AI ecosystem:
 - Established async bridge patterns
 
 ### **[PR #113: Async ACP SDK Support](https://github.com/agntcy/acp-sdk/pull/113)**
-- Repository: [agntcy/acp-sdk](https://github.com/agntcy/acp-sdk)
-- Status: Open  
+- Repository: [agntcy/acp-sdk](https://github.com/agntcy/acp-sdk) 
+- Status: Open
+- **Linux Foundation Project**: [Agentcy standardizes open multi-agent systems](https://www.linuxfoundation.org/press/linux-foundation-welcomes-the-agntcy-project-to-standardize-open-multi-agent-system-infrastructure-and-break-down-ai-agent-silos)
 - Added async client for 50x performance improvement
-- Enterprise-ready agent communication
+- Enterprise-ready agent communication with W3C standards
 
 ### **This Work: MCP-ACP Bridge**
 - Completes the triangle: MCP → ACP
@@ -180,14 +182,21 @@ A2A Agent → calls ACP API → MCP Bridge → executes MCP tool → returns res
 
 ## The Bigger Picture
 
-This completes a strategic vision:
+This connects the major open source foundations in AI:
 
-1. **Mozilla leads** in agent protocol interoperability  
-2. **W3C standards** bring enterprise adoption
-3. **Async architecture** enables production scale
-4. **Complete triangle** removes all protocol barriers
+1. **Mozilla AI** leads in agent protocol interoperability (MCP)
+2. **Google** provides agent-to-agent communication (A2A)
+3. **Linux Foundation** standardizes multi-agent infrastructure via Agentcy (ACP)
+4. **W3C standards** provide enterprise identity and credentials
+5. **This work** bridges them all together
 
-The result: **Any agent can use any tool, regardless of protocol.**
+The result: **Major open source AI foundations working together - any agent can use any tool, regardless of protocol.**
+
+### Foundation Collaboration Impact
+- **Mozilla ↔ Linux Foundation**: Direct protocol bridge
+- **Google ↔ Linux Foundation**: Future A2A-ACP integration  
+- **W3C Standards**: Identity layer across all protocols
+- **Open Source Unity**: Breaking down AI agent silos industry-wide
 
 ---
 
