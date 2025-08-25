@@ -1,15 +1,13 @@
-# MCP-ACP Bridge: Unifying Open Source AI Foundations
+# MCP-ACP Bridge: Protocol Interoperability for AI Agent Ecosystem
 
 > **Personal Project**: Anivar Aravind  
-> **Mission**: Connecting Mozilla AI, Linux Foundation, Google, and W3C standards for universal agent interoperability
+> **Mission**: Connecting Mozilla AI, Linux Foundation, Google, and W3C standards for agent protocol interoperability
 
-## The Vision
+## Project Overview
 
-The AI agent ecosystem was fragmented across foundation silos. Mozilla's MCP tools couldn't reach Linux Foundation's ACP services. Google's A2A agents operated in isolation. Enterprise identity standards were scattered.
+This project implements a bridge between Mozilla's Model Context Protocol (MCP) and Agentcy's Agent Connect Protocol (ACP), contributing to broader protocol interoperability in the AI agent ecosystem.
 
-This project **bridges the divide** - enabling seamless communication between all major open source AI foundations through standards-based protocol translation.
-
-## Foundation Protocol Triangle
+## Protocol Integration Approach
 
 ```
                     MCP (Mozilla)
@@ -18,7 +16,7 @@ This project **bridges the divide** - enabling seamless communication between al
                         /              \
                        /                \
               PR #757 /                  \ This Work
-          (any-agent) /                    \ (Bridge)
+          (any-agent) /                    \ (POC)
                      /                      \
                     v                        v
         A2A (Google)  ←────────────────→  ACP (Linux Foundation)
@@ -26,13 +24,13 @@ This project **bridges the divide** - enabling seamless communication between al
         Protocol           (A2A-ACP)       + W3C Identity Standards
 ```
 
-**Connecting Major Foundations:**
-- **🦊 Mozilla Foundation** → MCP protocol for AI tool integration
-- **🔍 Google** → A2A protocol for agent-to-agent communication  
-- **🐧 Linux Foundation** → [Agentcy project](https://github.com/agntcy) for [open multi-agent infrastructure](https://www.linuxfoundation.org/press/linux-foundation-welcomes-the-agntcy-project-to-standardize-open-multi-agent-system-infrastructure-and-break-down-ai-agent-silos)
-- **🌐 W3C** → [Decentralized Identifiers (DIDs)](https://www.w3.org/TR/did-core/) and [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) for enterprise authentication
+**Ecosystem Components:**
+- **Mozilla AI**: MCP protocol for tool-to-model integration
+- **Google**: A2A protocol for agent-to-agent communication  
+- **Linux Foundation**: [Agentcy project](https://github.com/agntcy) for [multi-agent infrastructure](https://www.linuxfoundation.org/press/linux-foundation-welcomes-the-agntcy-project-to-standardize-open-multi-agent-system-infrastructure-and-break-down-ai-agent-silos)
+- **W3C**: [Decentralized Identifiers (DIDs)](https://www.w3.org/TR/did-core/) and [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) standards
 
-## Standards-Based Architecture
+## Technical Architecture
 
 ```
 ┌─────────────────┐   HTTP/REST    ┌─────────────────┐   MCP Protocol   ┌─────────────────┐
@@ -51,210 +49,174 @@ This project **bridges the divide** - enabling seamless communication between al
     • W3C Identity                    • Async Architecture
 ```
 
-## My Strategic Contributions Across Foundations
+## Related Contributions
 
-### **🔐 [PR #154: W3C Identity in Mozilla MCP](https://github.com/mozilla-ai/mcpd/pull/154)**
+### [PR #154: AGNTCY Identity Support in mcpd](https://github.com/mozilla-ai/mcpd/pull/154)
 - **Repository**: [mozilla-ai/mcpd](https://github.com/mozilla-ai/mcpd)
 - **Standards**: [W3C DIDs](https://www.w3.org/TR/did-core/) + [Agentcy Identity Spec](https://spec.identity.agntcy.org/)
-- **Impact**: First W3C DID integration in Mozilla AI ecosystem
+- **Purpose**: W3C DID integration in Mozilla AI ecosystem
 - **Format**: `did:agntcy:dev:{org}:{server}` following W3C standards
 - **Status**: Open
 
-### **🌉 [PR #757: MCP-A2A Protocol Bridge](https://github.com/mozilla-ai/any-agent/pull/757)**
+### [PR #757: MCP-A2A Protocol Bridge](https://github.com/mozilla-ai/any-agent/pull/757)
 - **Repository**: [mozilla-ai/any-agent](https://github.com/mozilla-ai/any-agent)
-- **Standards**: Mozilla MCP ↔ Google A2A protocol translation
-- **Impact**: First cross-foundation protocol bridge (Mozilla ↔ Google)
-- **Architecture**: Async-first design patterns for production scale
+- **Purpose**: Mozilla MCP to Google A2A protocol translation
+- **Architecture**: Async-first design patterns
 - **Status**: Open
 
-### **⚡ [PR #113: Linux Foundation Async Support](https://github.com/agntcy/acp-sdk/pull/113)**
+### [PR #113: Async ACP SDK Support](https://github.com/agntcy/acp-sdk/pull/113)
 - **Repository**: [agntcy/acp-sdk](https://github.com/agntcy/acp-sdk)
 - **Foundation**: [Linux Foundation Agentcy Project](https://github.com/agntcy)
 - **Standards**: [ACP Protocol](https://spec.identity.agntcy.org/) with W3C Identity
-- **Impact**: 50x performance improvement through async architecture
-- **Enterprise**: Production-ready multi-agent communication
+- **Purpose**: Async client capabilities for ACP SDK
 - **Status**: Open
 
-### **🎯 This Work: Completing the Triangle**
-- **Mission**: Mozilla ↔ Linux Foundation direct bridge
+### This Work: MCP-ACP Bridge
+- **Purpose**: Mozilla MCP to Linux Foundation ACP bridge
 - **Standards**: MCP + ACP + W3C DIDs + Verifiable Credentials
-- **Result**: Complete interoperability across all major foundations
+- **Implementation**: Proof-of-concept with working examples
 
-## W3C Standards Integration
+## W3C Standards Implementation
 
-### Decentralized Identity Architecture
+### Identity Architecture
 ```yaml
 Identity Layer (W3C Standards):
   - DID Core Specification: https://www.w3.org/TR/did-core/
   - Verifiable Credentials: https://www.w3.org/TR/vc-data-model/
   - Agentcy Implementation: https://spec.identity.agntcy.org/
 
-Protocol Layer (Foundation Standards):
+Protocol Layer:
   - Mozilla MCP: Tool-to-model communication
   - Google A2A: Agent-to-agent workflows  
   - Linux Foundation ACP: Enterprise agent services
 
-Bridge Layer (This Work):
-  - Cross-foundation protocol translation
+Bridge Layer:
+  - Cross-protocol translation
   - Standards-compliant identity verification
-  - Production-scale async architecture
+  - Async architecture
 ```
 
-### Enterprise Authentication Flow
+### Authentication Flow
 1. **Identity Creation**: Generate W3C DID following Agentcy specifications
-2. **Credential Issuance**: Create Verifiable Credentials for agent authorization
-3. **Protocol Translation**: Bridge request between MCP ↔ ACP with identity verification
-4. **Standards Compliance**: Maintain W3C and foundation specifications throughout
+2. **Credential Issuance**: Create Verifiable Credentials for authorization
+3. **Protocol Translation**: Bridge requests between MCP and ACP with identity verification
+4. **Standards Compliance**: Maintain W3C and foundation specifications
 
-## Working Implementation
+## Implementation
 
-### 1. Foundation Bridge Setup
+### Basic Configuration
 ```python
 from bridge.config_acp import MCPToACPBridgeConfig
 from bridge.server_acp import serve_mcp_as_acp_async
 
-# Mozilla MCP → Linux Foundation ACP
+# Configure bridge
 bridge_config = MCPToACPBridgeConfig(
-    # Mozilla MCP Configuration
     mcp_command="npx",
     mcp_args=["-y", "@modelcontextprotocol/server-filesystem", "/tmp"],
-    
-    # Linux Foundation ACP Configuration  
     host="localhost",
     port=8090,
-    endpoint="/foundation-bridge",
-    
-    # W3C Identity Standards
-    identity_id="did:agntcy:dev:mozilla-bridge:fs-server",
-    organization="mozilla-foundation-bridge"
+    endpoint="/mcp-bridge",
+    identity_id="did:agntcy:dev:demo-org:fs-server",
+    organization="demo-org"
 )
 
-# Start cross-foundation bridge
+# Start bridge
 server = await serve_mcp_as_acp_async(bridge_config)
 ```
 
-### 2. Standards-Compliant API Access
+### API Usage
 ```bash
 # W3C Identity Authentication
-export IDENTITY_DID="did:agntcy:dev:mozilla-bridge:fs-server"
-export ORG_CREDENTIAL="mozilla-foundation-bridge"
+export IDENTITY_DID="did:agntcy:dev:demo-org:fs-server"
+export ORG_CREDENTIAL="demo-org"
 
-# Linux Foundation ACP API (accessing Mozilla tools)
+# ACP API calls
 curl -H "X-W3C-DID: $IDENTITY_DID" \
      -H "X-Agentcy-Org: $ORG_CREDENTIAL" \
-     http://localhost:8090/foundation-bridge/agents
+     http://localhost:8090/mcp-bridge/agents
 
-# Execute Mozilla MCP tool via Linux Foundation protocol
-curl -X POST http://localhost:8090/foundation-bridge/runs/stateless \
+# Tool execution
+curl -X POST http://localhost:8090/mcp-bridge/runs/stateless \
   -H "Content-Type: application/json" \
   -H "X-W3C-DID: $IDENTITY_DID" \
   -d '{"config": {"tool": "read_file", "args": {"path": "/tmp/data.txt"}}}'
 ```
 
-## Real-World Foundation Impact
+## Use Cases
 
-### Before This Work
-❌ **Foundation Silos**: Mozilla, Google, Linux Foundation protocols couldn't communicate  
-❌ **Identity Fragmentation**: No standard identity across AI agent systems  
-❌ **Enterprise Barriers**: No W3C-compliant authentication for AI agents  
-❌ **Integration Overhead**: Each foundation required separate implementation  
+### Enterprise Integration
+- Corporate MCP tools accessible via ACP REST API
+- W3C DID authentication for secure access
+- Standards-compliant identity verification
 
-### After This Work
-✅ **Universal Interoperability**: All major foundation protocols connected  
-✅ **W3C Standards**: Decentralized Identity and Verifiable Credentials throughout  
-✅ **Enterprise Ready**: Standards-compliant authentication and authorization  
-✅ **Foundation Collaboration**: Mozilla ↔ Linux Foundation ↔ Google integration  
+### Cross-Protocol Communication
+- Bridge between different agent protocol ecosystems
+- Enable tool sharing across protocol boundaries
+- Maintain protocol-specific optimizations
 
-## Production Use Cases
+### Standards Compliance
+- W3C DID Core implementation
+- Verifiable Credentials support
+- Foundation-specific protocol adherence
 
-### **Enterprise Multi-Foundation Deployment**
-```python
-# Corporate deployment using all foundations
-bridge_config = MCPToACPBridgeConfig(
-    mcp_command="./corporate-mcp-tools",
-    identity_id="did:agntcy:dev:acme-corp:production-tools",
-    organization="acme-corp",
-    host="enterprise-bridge.acme.com",
-    port=443,
-    endpoint="/api/v1/mozilla-tools"
-)
-# Result: Mozilla tools accessible via Linux Foundation protocol with W3C identity
-```
-
-### **Standards-Compliant Cloud Architecture**
-```yaml
-Microservices Architecture:
-  - Mozilla MCP Tools: Containerized tool servers
-  - Linux Foundation ACP: REST API gateway  
-  - W3C Identity: Decentralized authentication
-  - Google A2A: Agent orchestration (future)
-  
-Standards Compliance:
-  - W3C DID Core: https://www.w3.org/TR/did-core/
-  - W3C VC Data Model: https://www.w3.org/TR/vc-data-model/
-  - Agentcy Specifications: https://spec.identity.agntcy.org/
-```
-
-### **Cross-Foundation Workflow**
-```
-Enterprise Agent (A2A) → Linux Foundation API (ACP) → 
-Mozilla Bridge → MCP Tool Execution → W3C Verified Results
-```
-
-## Quick Start
+## Getting Started
 
 ```bash
-# 1. Install dependencies
+# Install dependencies
 pip install -r requirements.txt
 
-# 2. Basic foundation bridge
+# Basic demo
 python examples/basic_demo.py
 
-# 3. Enterprise W3C identity demo  
+# Advanced demo with identity
 python examples/advanced_demo.py
 
-# 4. Test standards compliance
-curl http://localhost:8090/foundation-bridge/agents
+# Test API
+curl http://localhost:8090/mcp-bridge/agents
 ```
 
-## Open Source Foundation Ecosystem
+## Project Structure
 
-This work creates the first **complete bridge network** between major open source AI foundations:
+```
+bridge/
+├── config_acp.py          # Configuration management
+├── bridge_executor.py     # Protocol translation logic
+└── server_acp.py         # ACP server implementation
 
-### **Direct Connections Established**
-1. **Mozilla Foundation** (MCP) ↔ **Linux Foundation** (ACP) - *This work*
-2. **Mozilla Foundation** (MCP) ↔ **Google** (A2A) - *PR #757*  
-3. **W3C Standards** ↔ **All Protocols** - *Identity integration*
+examples/
+├── basic_demo.py          # Basic usage example
+└── advanced_demo.py       # Enterprise features demo
 
-### **Future Complete Triangle**
-4. **Google** (A2A) ↔ **Linux Foundation** (ACP) - *Planned integration*
+tests/
+└── test_bridge.py         # Test suite
+```
 
-### **Standards Integration**
+## Standards and Specifications
+
 - **[W3C Decentralized Identifiers](https://www.w3.org/TR/did-core/)**: Universal identity layer
-- **[W3C Verifiable Credentials](https://www.w3.org/TR/vc-data-model/)**: Enterprise authentication
+- **[W3C Verifiable Credentials](https://www.w3.org/TR/vc-data-model/)**: Authentication framework
 - **[Agentcy Specifications](https://spec.identity.agntcy.org/)**: Implementation guidelines
-- **[Linux Foundation Project](https://www.linuxfoundation.org/press/linux-foundation-welcomes-the-agntcy-project-to-standardize-open-multi-agent-system-infrastructure-and-break-down-ai-agent-silos)**: Industry standardization
+- **[Linux Foundation Announcement](https://www.linuxfoundation.org/press/linux-foundation-welcomes-the-agntcy-project-to-standardize-open-multi-agent-system-infrastructure-and-break-down-ai-agent-silos)**: Industry standardization
 
-## The Bigger Picture: Open Source AI Unity
+## Protocol Interoperability Status
 
-**Mission Accomplished**: Breaking down AI agent silos across the entire open source ecosystem.
+| Protocol | Mozilla MCP | Google A2A | Linux Foundation ACP |
+|----------|-------------|-------------|---------------------|
+| **Mozilla MCP** | Native | PR #757 | This Work |
+| **Google A2A** | PR #757 | Native | Future Work |
+| **Linux Foundation ACP** | This Work | Future Work | Native |
 
-### **Foundation Collaboration Matrix**
-| From → To | Mozilla | Google | Linux Foundation | W3C |
-|-----------|---------|--------|------------------|-----|
-| **Mozilla** | ✅ Native | ✅ PR #757 | ✅ This Work | ✅ PR #154 |
-| **Google** | ✅ PR #757 | ✅ Native | 🔄 Future | ✅ Standards |
-| **Linux Foundation** | ✅ This Work | 🔄 Future | ✅ Native | ✅ Agentcy |
-| **W3C** | ✅ Identity | ✅ Standards | ✅ Specs | ✅ Native |
+## Current Limitations
 
-### **Industry Impact**
-- **🌍 Universal Protocol**: Any agent protocol can communicate with any other
-- **🏛️ Foundation Unity**: All major open source AI foundations connected
-- **📋 Standards Compliant**: W3C identity and credential specifications throughout
-- **🚀 Enterprise Ready**: Production-scale architecture with proper authentication
+- Proof-of-concept implementation
+- Limited to stateless operations
+- Mock MCP client for demonstration
+- Requires further testing for production use
+
+## Contributing
+
+This is a personal project demonstrating protocol interoperability concepts. The implementation follows established patterns and maintains compatibility with existing standards.
 
 ---
 
-**Result**: The open source AI community now has **universal interoperability** - any agent can use any tool from any foundation, with standards-compliant identity and enterprise-grade security.
-
-**Repository**: Complete working implementation ready for production deployment and community contribution.
+**Repository**: Working proof-of-concept for MCP-ACP protocol bridging with W3C standards compliance.
