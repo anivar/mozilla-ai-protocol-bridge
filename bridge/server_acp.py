@@ -1,71 +1,63 @@
 """ACP server implementation for MCP-ACP bridge."""
 
 import asyncio
+import json
 from typing import Optional
 
-from any_agent.logging import logger
-from any_agent.serving.server_handle import ServerHandle
-
-from .bridge_executor import MCPToACPBridgeExecutor
+from .bridge_executor import MCPToACPBridgeExecutor, SimpleMCPClient, RunCreateStateless
 from .config_acp import MCPToACPBridgeConfig
 
 # Check if ACP is available
 acp_available = False
 try:
-    from agntcy_acp import (
-        Agent,
-        AgentMetadata,
-        RunCreateStateless,
-    )
+    from agntcy_acp import Agent, AgentMetadata
     acp_available = True
 except ImportError:
-    pass
+    # Fallback when ACP not available
+    class Agent:
+        def __init__(self, **kwargs):
+            for k, v in kwargs.items():
+                setattr(self, k, v)
+        def model_dump(self):
+            return self.__dict__
+    
+    class AgentMetadata:
+        def __init__(self, **kwargs):
+            for k, v in kwargs.items():
+                setattr(self, k, v)
+
+
+class ServerHandle:
+    """Handle for managing the server."""
+    def __init__(self, task, server=None):
+        self.task = task
+        self.server = server
+    
+    async def shutdown(self):
+        """Shutdown the server."""
+        if self.server:
+            self.server.should_exit = True
+        if self.task:
+            self.task.cancel()
 
 
 async def serve_mcp_as_acp_async(
-    mcp_config,
-    bridge_config: Optional[MCPToACPBridgeConfig] = None,
-    framework: str = "tinyagent",
+    bridge_config: MCPToACPBridgeConfig,
+    framework: str = "standalone",
 ) -> ServerHandle:
-    """Serve an MCP server as an ACP service.
-
-    Args:
-        mcp_config: MCP server configuration
-        bridge_config: Bridge configuration (uses defaults if not provided)
-        framework: Agent framework to use for tool conversion
-
-    Returns:
-        ServerHandle for managing the server
-
-    Raises:
-        ImportError: If ACP dependencies are not installed
-    """
-    if not acp_available:
-        msg = "You need to `pip install 'agntcy-acp'` to use MCP to ACP bridge"
-        raise ImportError(msg)
+    """Serve an MCP server as an ACP service."""
     
-    from any_agent.config import AgentFramework
-    from any_agent.tools.mcp.mcp_client import MCPClient
-    import uvicorn
-    from starlette.applications import Starlette
-    from starlette.routing import Route
-    from starlette.responses import JSONResponse
+    # Import dependencies
+    try:
+        import uvicorn
+        from starlette.applications import Starlette
+        from starlette.routing import Route
+        from starlette.responses import JSONResponse
+    except ImportError:
+        raise ImportError("You need to `pip install uvicorn starlette` to run the bridge server")
     
-    # Use default config if not provided
-    if bridge_config is None:
-        bridge_config = MCPToACPBridgeConfig(mcp_config=mcp_config)
-    else:
-        # Ensure mcp_config is set
-        bridge_config.mcp_config = mcp_config
-    
-    # Create and connect MCP client
-    mcp_client = MCPClient(
-        config=mcp_config,
-        framework=AgentFramework.from_string(framework),
-    )
-    await mcp_client.connect()
-    
-    # Create executor
+    # Create MCP client and executor
+    mcp_client = SimpleMCPClient(bridge_config)
     executor = MCPToACPBridgeExecutor(mcp_client, bridge_config)
     await executor.initialize()
     
@@ -110,19 +102,27 @@ def _create_route_handlers(executor: MCPToACPBridgeExecutor, bridge_config: MCPT
     
     async def create_stateless_run(request):
         """Create a stateless run."""
-        body = await request.json()
-        
-        if acp_available:
+        try:
+            body = await request.json()
+            print(f"Received run request: {body}")
+            
+            # Create run request object
             run_request = RunCreateStateless(**body)
-        else:
-            # Fallback when ACP not available
-            run_request = type('RunRequest', (), body)
-        
-        # Execute the run
-        result = await executor.execute_stateless_run(run_request)
-        
-        result_dict = result.model_dump() if hasattr(result, 'model_dump') else result
-        return JSONResponse(result_dict)
+            
+            # Execute the run
+            result = await executor.execute_stateless_run(run_request)
+            
+            result_dict = result.model_dump() if hasattr(result, 'model_dump') else result.__dict__
+            return JSONResponse(result_dict)
+            
+        except Exception as e:
+            print(f"Error in create_stateless_run: {e}")
+            return JSONResponse({
+                "id": "error",
+                "status": "failed",
+                "error": {"type": "RequestError", "message": str(e)},
+                "output": {"error": str(e), "success": False}
+            }, status_code=500)
     
     async def get_stateless_run(request):
         """Get stateless run status - not implemented for bridge."""
@@ -146,29 +146,16 @@ def _create_agent_response(executor: MCPToACPBridgeExecutor, bridge_config: MCPT
     agent_name = f"{bridge_config.server_name} MCP Bridge"
     agent_description = f"MCP server '{bridge_config.server_name}' exposed via ACP"
     
-    if acp_available:
-        return Agent(
-            id=agent_id,
-            name=agent_name,
-            description=agent_description,
-            metadata=AgentMetadata(
-                organization=bridge_config.organization,
-                version=bridge_config.version,
-            ),
-            acp_descriptor=executor._agent_manifest.get("acp", {}),
-        )
-    else:
-        # Fallback when ACP not available
-        return {
-            "id": agent_id,
-            "name": agent_name,
-            "description": agent_description,
-            "metadata": {
-                "organization": bridge_config.organization,
-                "version": bridge_config.version,
-            },
-            "acp_descriptor": executor._agent_manifest.get("acp", {}),
-        }
+    return Agent(
+        id=agent_id,
+        name=agent_name,
+        description=agent_description,
+        metadata=AgentMetadata(
+            organization=bridge_config.organization,
+            version=bridge_config.version,
+        ),
+        acp_descriptor=executor._agent_manifest.get("acp", {}),
+    )
 
 
 def _create_starlette_app(bridge_config: MCPToACPBridgeConfig, handlers: dict) -> "Starlette":
@@ -213,16 +200,11 @@ async def _start_uvicorn_server(app, bridge_config: MCPToACPBridgeConfig) -> Ser
 
 def _log_server_startup(bridge_config: MCPToACPBridgeConfig, server_handle: ServerHandle) -> None:
     """Log server startup information."""
-    # Get actual port if using dynamic port
-    actual_port = bridge_config.port
-    if bridge_config.port == 0 and hasattr(server_handle.server, 'servers') and server_handle.server.servers:
-        actual_port = server_handle.server.servers[0].sockets[0].getsockname()[1]
-    
-    bridge_url = f"http://{bridge_config.host}:{actual_port}{bridge_config.endpoint}"
+    bridge_url = f"http://{bridge_config.host}:{bridge_config.port}{bridge_config.endpoint}"
     
     if bridge_config.identity_id:
-        logger.info(f"MCP to ACP bridge started at {bridge_url} with identity {bridge_config.identity_id}")
+        print(f"MCP to ACP bridge started at {bridge_url} with identity {bridge_config.identity_id}")
     else:
-        logger.info(f"MCP to ACP bridge started at {bridge_url}")
+        print(f"MCP to ACP bridge started at {bridge_url}")
     
-    logger.info(f"ACP manifest available at: {bridge_url}/agents")
+    print(f"ACP manifest available at: {bridge_url}/agents")

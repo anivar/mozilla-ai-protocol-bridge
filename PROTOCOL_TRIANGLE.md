@@ -69,7 +69,7 @@ Key Features:
 
 ## Bridge Implementations
 
-### PR #757: MCP → A2A Bridge (Merged)
+### PR #757: MCP → A2A Bridge (Open)
 **Location:** mozilla-ai/any-agent
 **Function:** Expose MCP tools as A2A-compatible agents
 **Pattern:** Protocol translation + async architecture
