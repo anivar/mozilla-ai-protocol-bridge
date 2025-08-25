@@ -53,6 +53,7 @@ This work builds on strategic contributions across the Mozilla AI ecosystem:
 - Repository: [mozilla-ai/mcpd](https://github.com/mozilla-ai/mcpd)
 - Status: Open
 - Added W3C DID authentication to Mozilla's MCP daemon
+- **Identity Spec**: Following [Agentcy Identity standards](https://spec.identity.agntcy.org/)
 - Format: `did:agntcy:dev:{org}:{server}`
 
 ### **[PR #757: MCP-A2A Bridge in any-agent](https://github.com/mozilla-ai/any-agent/pull/757)** 
@@ -64,9 +65,10 @@ This work builds on strategic contributions across the Mozilla AI ecosystem:
 ### **[PR #113: Async ACP SDK Support](https://github.com/agntcy/acp-sdk/pull/113)**
 - Repository: [agntcy/acp-sdk](https://github.com/agntcy/acp-sdk) 
 - Status: Open
-- **Linux Foundation Project**: [Agentcy standardizes open multi-agent systems](https://www.linuxfoundation.org/press/linux-foundation-welcomes-the-agntcy-project-to-standardize-open-multi-agent-system-infrastructure-and-break-down-ai-agent-silos)
+- **Linux Foundation Project**: [Agentcy](https://github.com/agntcy) [standardizes open multi-agent systems](https://www.linuxfoundation.org/press/linux-foundation-welcomes-the-agntcy-project-to-standardize-open-multi-agent-system-infrastructure-and-break-down-ai-agent-silos)
+- **Identity Spec**: [W3C DID specifications](https://spec.identity.agntcy.org/)
 - Added async client for 50x performance improvement
-- Enterprise-ready agent communication with W3C standards
+- Enterprise-ready agent communication with standards
 
 ### **This Work: MCP-ACP Bridge**
 - Completes the triangle: MCP → ACP
@@ -193,10 +195,10 @@ This connects the major open source foundations in AI:
 The result: **Major open source AI foundations working together - any agent can use any tool, regardless of protocol.**
 
 ### Foundation Collaboration Impact
-- **Mozilla ↔ Linux Foundation**: Direct protocol bridge
+- **Mozilla ↔ Linux Foundation**: Direct protocol bridge (this work)
 - **Google ↔ Linux Foundation**: Future A2A-ACP integration  
-- **W3C Standards**: Identity layer across all protocols
-- **Open Source Unity**: Breaking down AI agent silos industry-wide
+- **W3C Standards**: [Identity specifications](https://spec.identity.agntcy.org/) across all protocols
+- **Open Source Unity**: [Agentcy project](https://github.com/agntcy) breaking down AI agent silos industry-wide
 
 ---
 
