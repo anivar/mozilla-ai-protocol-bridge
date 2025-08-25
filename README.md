@@ -48,20 +48,20 @@ This project bridges that gap by completing the "protocol triangle" - enabling a
 
 This work builds on strategic contributions across the Mozilla AI ecosystem:
 
-### **PR #154: AGNTCY Identity Support in mcpd**
-- Repository: mozilla-ai/mcpd
+### **[PR #154: AGNTCY Identity Support in mcpd](https://github.com/mozilla-ai/mcpd/pull/154)**
+- Repository: [mozilla-ai/mcpd](https://github.com/mozilla-ai/mcpd)
 - Status: Open
 - Added W3C DID authentication to Mozilla's MCP daemon
 - Format: `did:agntcy:dev:{org}:{server}`
 
-### **PR #757: MCP-A2A Bridge in any-agent** 
-- Repository: mozilla-ai/any-agent
+### **[PR #757: MCP-A2A Bridge in any-agent](https://github.com/mozilla-ai/any-agent/pull/757)** 
+- Repository: [mozilla-ai/any-agent](https://github.com/mozilla-ai/any-agent)
 - Status: Open
 - First bridge: MCP tools → A2A agents
 - Established async bridge patterns
 
-### **PR #113: Async ACP SDK Support**
-- Repository: agntcy/acp-sdk
+### **[PR #113: Async ACP SDK Support](https://github.com/agntcy/acp-sdk/pull/113)**
+- Repository: [agntcy/acp-sdk](https://github.com/agntcy/acp-sdk)
 - Status: Open  
 - Added async client for 50x performance improvement
 - Enterprise-ready agent communication
