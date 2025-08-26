@@ -209,10 +209,19 @@ Key projects I work with:
 - **OASF**: Open Agentic Schema Framework
 - **Identity**: W3C DID standards for agents
 
-My contributions span both ecosystems:
-- **Mozilla AI**: 11+ PRs across any-agent, any-llm, mcpd
-- **Linux Foundation AGNTCY**: Multiple PRs including ACP SDK async support, OASF contributions
-- **This POC**: Connecting both worlds with working bridges
+My open source contributions span multiple projects:
+- **Mozilla AI**: 11+ PRs across any-agent, any-llm, mcpd - building agent infrastructure
+- **Linux Foundation AGNTCY**: ACP SDK async support, OASF OpenTelemetry integration  
+- **MLCommons**: PR #2289 - Inference tools and benchmarking improvements
+- **Mozilla Rhino**: Multiple merged ES2025+ features:
+  - Promise.withResolvers (ES2024) - PR #1980
+  - BigInt.asUintN/asIntN fixes - PR #1979
+  - ISO date parsing enhancements - PR #1978
+  - Ongoing: Promise.try, Set methods, Array.from fixes
+- **Open Policy Agent**: PURL functions, metrics, inspection tools - security infrastructure
+- **This POC**: Connecting Mozilla AI and AGNTCY with identity-aware bridges
+
+Focus areas: Agent protocols, JavaScript standards, async infrastructure, security, and ML benchmarking.
 
 ## The Goal
 
