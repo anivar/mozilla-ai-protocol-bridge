@@ -3,6 +3,7 @@
 > **Developer**: Anivar Aravind  
 > **Mission**: Enable any tool to work with any agent, regardless of protocol
 > **Innovation**: First to implement identity-aware protocol bridging
+> **Hub**: Mozilla AI - where all protocols converge
 
 ## Why This Matters
 
@@ -19,23 +20,31 @@ I'm solving this with protocol bridges that preserve cryptographic identity acro
                     MCP (Anthropic)
                    Model Context Protocol
                     Tools & Resources
-                        /              \
-                       /                \
-              PR #757 /                  \ PR #774
-          (any-agent) /                    \ (this POC)
-                     /                      \
-                    v                        v
-        A2A (Google LF)                   ACP (AGNTCY LF)
-       Agent-to-Agent                    Agent Connect Protocol
-        Protocol                         + W3C Identity Standards
+                            |
+                            v
+                    ┌─────────────────┐
+                    │   Mozilla AI    │
+                    │                 │
+                    │  • any-agent    │
+                    │  • mcpd         │
+                    │  • Identity     │
+                    └────┬───────┬────┘
+                         /         \
+                        /           \
+               PR #757 /             \ PR #774
+                      /               \
+                     v                 v
+        A2A (Google LF)              ACP (AGNTCY LF)
+       Agent-to-Agent              Agent Connect Protocol
+        Protocol                   + W3C Identity Standards
 ```
 
 **Key Players:**
-- **Anthropic**: Created MCP for tool/model integration
-- **Mozilla AI**: Hosts any-agent framework and mcpd daemon
-- **Google**: Donated A2A protocol to Linux Foundation
-- **AGNTCY**: Linux Foundation project for agent infrastructure
-- **W3C**: Standards for identity (DIDs) and credentials
+- **Mozilla AI**: The hub - hosts any-agent (multi-protocol framework) and mcpd (MCP daemon)
+- **Anthropic**: Created MCP protocol for tool/model integration
+- **Google**: Created A2A protocol, donated to Linux Foundation
+- **AGNTCY**: Linux Foundation project with ACP protocol
+- **W3C**: Standards for decentralized identity (DIDs)
 
 ## Technical Architecture
 
@@ -204,10 +213,19 @@ All protocol bridges leverage AGNTCY Identity from mcpd for secure, verifiable t
 └─────────────────────────────────────────────────────────────────────┘
 ```
 
+### The Mozilla AI Central Role
+
+Mozilla AI is uniquely positioned as the convergence point:
+- **any-agent**: The only framework supporting both A2A and future multi-protocol serving
+- **mcpd**: The MCP daemon that Mozilla maintains, where I added identity support
+- **Community**: Where protocol implementers collaborate on interoperability
+
+My work leverages Mozilla AI's central position to bridge all protocols.
+
 ### 5. Identity Flow Sequence
 
 ```
-Step 1: Identity Generation
+Step 1: Identity Generation (in Mozilla's mcpd)
 ┌──────┐                      ┌──────────┐
 │ User │                      │   mcpd   │
 └──┬───┘                      └────┬─────┘
