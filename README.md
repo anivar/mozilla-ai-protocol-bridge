@@ -1,9 +1,9 @@
 # Breaking Protocol Silos: MCP ↔ A2A ↔ ACP Interoperability
 
 > **Developer**: Anivar Aravind  
-> **Mission**: Enable any tool to work with any agent, regardless of protocol
-> **Innovation**: First to implement identity-aware protocol bridging
-> **Hub**: Mozilla AI - where all protocols converge
+> **Mission**: Enterprise-grade AI agent infrastructure with cryptographic identity
+> **Innovation**: First to implement verifiable cross-protocol agent interactions
+> **Focus**: Security, compliance, and audit trails for production AI systems
 
 ## Why This Matters
 
@@ -12,7 +12,11 @@ The AI agent ecosystem is fragmented:
 - **A2A** (Google → Linux Foundation): Great for agents, limited tool access
 - **ACP** (AGNTCY/Linux Foundation): Enterprise-ready, but new ecosystem
 
-I'm solving this with protocol bridges that preserve cryptographic identity across all translations. This isn't just connecting protocols - it's building the foundation for enterprise-grade, verifiable AI agent interactions.
+I'm solving this by building enterprise AI infrastructure that corporations can trust:
+- **Cryptographic identity** for every agent and tool interaction
+- **Audit trails** built into the protocol layer
+- **Compliance-ready** with W3C standards
+- **Zero-trust architecture** where every call is verifiable
 
 ## Protocol Integration Approach
 
@@ -92,7 +96,7 @@ I'm solving this with protocol bridges that preserve cryptographic identity acro
 - Enables high-performance ACP integrations
 - Required for the MCP-ACP bridge to work efficiently
 
-I'm actively improving Mozilla AI's entire stack while building bridges to Linux Foundation projects.
+I'm building enterprise-grade AI infrastructure with verifiable identity, async performance, and cross-protocol interoperability.
 
 ## Why Not OAuth? The Identity Challenge
 
@@ -338,22 +342,27 @@ curl -X POST http://localhost:8090/mcp-bridge/runs/stateless \
   -d '{"config": {"tool": "read_file", "args": {"path": "/tmp/data.txt"}}}'
 ```
 
-## Use Cases
+## Enterprise AI Use Cases
 
-### Enterprise Integration
-- Corporate MCP tools accessible via ACP REST API
-- W3C DID authentication for secure access
-- Standards-compliant identity verification
+### Financial Services
+- **Audit Requirements**: Every AI decision tracked with cryptographic proof
+- **Compliance**: W3C DIDs provide regulatory-compliant identity trail
+- **Risk Management**: Verify which AI agent made each trading decision
 
-### Cross-Protocol Communication
-- Bridge between different agent protocol ecosystems
-- Enable tool sharing across protocol boundaries
-- Maintain protocol-specific optimizations
+### Healthcare Systems  
+- **HIPAA Compliance**: Identity verification for every data access
+- **Chain of Custody**: Track which AI touched patient data
+- **Multi-Organization**: Hospitals sharing AI tools with verified identity
 
-### Standards Compliance
-- W3C DID Core implementation
-- Verifiable Credentials support
-- Foundation-specific protocol adherence
+### Manufacturing & Supply Chain
+- **Zero Trust**: Every robot/AI interaction is cryptographically verified
+- **Vendor Integration**: Connect AI systems across companies securely
+- **Incident Response**: Complete audit trail when something goes wrong
+
+### Why Enterprises Need This
+- **Not just "AI"**: Enterprise AI with accountability
+- **Not just "secure"**: Cryptographically verifiable
+- **Not just "connected"**: Identity-aware interoperability
 
 ## Getting Started
 
