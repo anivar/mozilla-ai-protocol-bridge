@@ -118,7 +118,9 @@ AGNTCY provides the enterprise foundation:
 - **DIR**: Agent discovery
 - **SLIM**: Secure messaging
 
-My work bridges Mozilla AI's tools with AGNTCY's enterprise infrastructure. I also contributed async support to the ACP SDK (PR #113), enabling high-performance protocol implementations.
+My work bridges Mozilla AI's tools with AGNTCY's enterprise infrastructure. My AGNTCY contributions include:
+- **ACP SDK PR #113**: Added async support for high-performance implementations
+- **OASF PR #274**: Contributing to the Open Agentic Schema Framework
 
 ### 4. Building on Both Foundations
 
@@ -208,9 +210,9 @@ Key projects I work with:
 - **Identity**: W3C DID standards for agents
 
 My contributions span both ecosystems:
-- 11+ PRs across Mozilla AI making things work better
-- Async support for AGNTCY's ACP SDK
-- This proof-of-concept connecting both worlds
+- **Mozilla AI**: 11+ PRs across any-agent, any-llm, mcpd
+- **Linux Foundation AGNTCY**: Multiple PRs including ACP SDK async support, OASF contributions
+- **This POC**: Connecting both worlds with working bridges
 
 ## The Goal
 
