@@ -1,22 +1,28 @@
-# MCP-ACP Bridge: Protocol Interoperability for AI Agent Ecosystem
+# Breaking Protocol Silos: MCP ↔ A2A ↔ ACP Interoperability
 
-> **Personal Project**: Anivar Aravind  
-> **Mission**: Connecting Mozilla AI, Linux Foundation, Google, and W3C standards for agent protocol interoperability
+> **Developer**: Anivar Aravind  
+> **Mission**: Enable any tool to work with any agent, regardless of protocol
+> **Innovation**: First to implement identity-aware protocol bridging
 
-## Project Overview
+## Why This Matters
 
-This project implements a bridge between Mozilla's Model Context Protocol (MCP) and Agentcy's Agent Connect Protocol (ACP), contributing to broader protocol interoperability in the AI agent ecosystem.
+The AI agent ecosystem is fragmented:
+- **MCP** (Anthropic): Amazing tools, but isolated from agent protocols
+- **A2A** (Google → Linux Foundation): Great for agents, limited tool access
+- **ACP** (AGNTCY/Linux Foundation): Enterprise-ready, but new ecosystem
+
+I'm solving this with protocol bridges that preserve cryptographic identity across all translations. This isn't just connecting protocols - it's building the foundation for enterprise-grade, verifiable AI agent interactions.
 
 ## Protocol Integration Approach
 
 ```
-                    MCP (Mozilla)
+                    MCP (Anthropic)
                    Model Context Protocol
                     Tools & Resources
                         /              \
                        /                \
               PR #757 /                  \ PR #774
-          (any-agent) /                    \ (POC)
+          (any-agent) /                    \ (this POC)
                      /                      \
                     v                        v
         A2A (Google LF)                   ACP (AGNTCY LF)
@@ -24,11 +30,12 @@ This project implements a bridge between Mozilla's Model Context Protocol (MCP) 
         Protocol                         + W3C Identity Standards
 ```
 
-**Ecosystem Components:**
-- **Mozilla AI**: MCP protocol for tool-to-model integration
-- **Google**: A2A protocol for agent-to-agent communication  
-- **Linux Foundation**: [Agentcy project](https://github.com/agntcy) for [multi-agent infrastructure](https://www.linuxfoundation.org/press/linux-foundation-welcomes-the-agntcy-project-to-standardize-open-multi-agent-system-infrastructure-and-break-down-ai-agent-silos)
-- **W3C**: [Decentralized Identifiers (DIDs)](https://www.w3.org/TR/did-core/) and [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) standards
+**Key Players:**
+- **Anthropic**: Created MCP for tool/model integration
+- **Mozilla AI**: Hosts any-agent framework and mcpd daemon
+- **Google**: Donated A2A protocol to Linux Foundation
+- **AGNTCY**: Linux Foundation project for agent infrastructure
+- **W3C**: Standards for identity (DIDs) and credentials
 
 ## Technical Architecture
 
@@ -37,44 +44,61 @@ This project implements a bridge between Mozilla's Model Context Protocol (MCP) 
 │   ACP Client    │ ──────────────→ │  MCP-ACP Bridge │ ─────────────────→ │   MCP Server    │
 │                 │                │                 │                   │                 │
 │ • REST API      │ ←────────────── │ • Protocol      │ ←─────────────── │ • Tools         │
-│ • W3C DIDs      │   JSON         │   Translation   │   Tool Results   │ • Files         │
-│ • Verifiable    │                │ • Identity      │                   │ • Databases     │
-│   Credentials   │                │   Verification  │                   │ • APIs          │
+│ • W3C DIDs      │   JSON         │   Translation   │   Tool Results   │ • Resources     │
+│ • Async SDK     │                │ • Identity      │                   │ • Databases     │
+│   (PR #113)     │                │   Verification  │                   │ • APIs          │
 └─────────────────┘                └─────────────────┘                   └─────────────────┘
         ↑                                    ↑
         │                                    │
-    Standards:                         Standards:
-    • Linux Foundation                 • Mozilla AI
-    • Agentcy Specs                   • MCP Protocol
-    • W3C Identity                    • Async Architecture
+    My Contributions:                  My Contributions:
+    • PR #113 (AGNTCY)                • PR #154 (mcpd identity)
+    • Async support                    • PR #774 (this bridge)
+    • W3C Identity                    • PR #757 (A2A bridge)
 ```
 
-## Related Contributions
+## My Contributions Across Organizations
 
-### [PR #154: AGNTCY Identity Support in mcpd](https://github.com/mozilla-ai/mcpd/pull/154)
-- **Repository**: [mozilla-ai/mcpd](https://github.com/mozilla-ai/mcpd)
-- **Standards**: [W3C DIDs](https://www.w3.org/TR/did-core/) + [Agentcy Identity Spec](https://spec.identity.agntcy.org/)
-- **Purpose**: W3C DID integration in Mozilla AI ecosystem
-- **Format**: `did:agntcy:dev:{org}:{server}` following W3C standards
-- **Status**: Open
+### Mozilla AI Repository Contributions
 
-### [PR #757: MCP-A2A Protocol Bridge](https://github.com/mozilla-ai/any-agent/pull/757)
-- **Repository**: [mozilla-ai/any-agent](https://github.com/mozilla-ai/any-agent)
-- **Purpose**: Mozilla MCP to Google A2A protocol translation
-- **Architecture**: Async-first design patterns
-- **Status**: Open
+**[PR #154: AGNTCY Identity in mcpd](https://github.com/mozilla-ai/mcpd/pull/154)**
+- Added cryptographic identity (Ed25519) to MCP servers
+- W3C DID format: `did:agntcy:mcpd:{org}:{server}`
+- Foundation for all protocol bridges
 
-### [PR #113: Async ACP SDK Support](https://github.com/agntcy/acp-sdk/pull/113)
-- **Repository**: [agntcy/acp-sdk](https://github.com/agntcy/acp-sdk)
-- **Foundation**: [Linux Foundation Agentcy Project](https://github.com/agntcy)
-- **Standards**: [ACP Protocol](https://spec.identity.agntcy.org/) with W3C Identity
-- **Purpose**: Async client capabilities for ACP SDK
-- **Status**: Open
+**[PR #757: MCP-to-A2A Bridge](https://github.com/mozilla-ai/any-agent/pull/757)**
+- Bridges Anthropic's MCP to Google's A2A protocol
+- Identity preserved for audit (A2A can't transmit it)
+- Performance optimized with tool caching
 
-### [PR #774: MCP-ACP Bridge](https://github.com/mozilla-ai/any-agent/pull/774)
-- **Purpose**: Mozilla MCP to Linux Foundation ACP bridge
-- **Standards**: MCP + ACP + W3C DIDs + Verifiable Credentials
-- **Implementation**: Production-ready with this POC as reference
+**[PR #774: MCP-to-ACP Bridge](https://github.com/mozilla-ai/any-agent/pull/774)**
+- Bridges MCP to AGNTCY's ACP protocol
+- Full identity exposure via REST metadata
+- Enterprise-ready with W3C standards
+
+### Linux Foundation AGNTCY Contribution
+
+**[PR #113: Async Support for ACP SDK](https://github.com/agntcy/acp-sdk/pull/113)**
+- Critical async/await support for Python SDK
+- Enables high-performance ACP integrations
+- Required for the MCP-ACP bridge to work efficiently
+
+This is significant: I'm contributing to both Mozilla AI and Linux Foundation projects to ensure they work together seamlessly.
+
+## Why Not OAuth? The Identity Challenge
+
+Traditional OAuth doesn't work for agent protocols:
+
+1. **Non-Browser Environments**: MCP servers run as CLI tools, daemons, or background services - no browser for OAuth flow
+2. **Machine-to-Machine**: Agents talk directly to each other without human intervention
+3. **Protocol Constraints**: A2A doesn't support bearer tokens or headers; it's a custom wire protocol
+4. **Startup Authentication**: Tools need identity verification at startup, not per-request
+5. **Decentralized**: No central OAuth provider makes sense for distributed agent networks
+
+That's why I'm using **AGNTCY Identity** with W3C DIDs:
+- Works offline (no auth server needed)
+- Cryptographic verification (Ed25519 signatures)
+- Protocol agnostic (same identity across MCP, A2A, ACP)
+- Machine-friendly (no human in the loop)
 
 ## W3C Standards Implementation
 
