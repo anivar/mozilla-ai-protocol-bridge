@@ -76,12 +76,12 @@ Mozilla AI Ecosystem:
 The any-suite provides complete AI infrastructure
 ```
 
-Mozilla AI's vision is bigger than just bridges - it's a complete suite:
-- **any-llm**: Unified interface for all LLM providers
-- **any-agent**: Multi-protocol agent framework
-- **mcpd**: Tool lifecycle management with identity
+Mozilla AI's vision is a unified ecosystem:
+- **mcpd**: "requirements.txt for agentic systems" - Manage MCP servers and tools with one config
+- **any-llm**: A single interface to use different LLM providers
+- **any-agent**: A single interface to use and evaluate different agent frameworks
 
-My bridges extend this vision by connecting external protocols.
+My bridges extend this "single interface" philosophy by making protocols work together.
 
 ### 3. Building on the Foundation
 
