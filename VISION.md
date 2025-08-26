@@ -4,35 +4,121 @@
 
 The AI agent ecosystem is fragmented. We have amazing tools in MCP, powerful agent communication in A2A, and enterprise-ready REST APIs in ACP - but they don't talk to each other. 
 
-I'm fixing that.
+I'm working on connecting them together.
 
 ## The Problem
 
-1. **MCP** (Anthropic): Incredible tool ecosystem - filesystem, databases, APIs. But isolated from agent protocols.
-2. **A2A** (Google/LF): Great for agent workflows. But can't access MCP tools directly.
-3. **ACP** (AGNTCY/LF): REST-based, supports rich metadata. But new and separate ecosystem.
+```
+Current State - Isolated Protocols:
+
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│     MCP     │     │     A2A     │     │     ACP     │
+│ (Anthropic) │     │ (Google/LF) │     │ (AGNTCY/LF) │
+├─────────────┤     ├─────────────┤     ├─────────────┤
+│   Tools:    │     │   Agents    │     │    REST     │
+│ • Filesystem│     │ • Workflows │     │ • Metadata  │
+│ • Databases │     │ • Messages  │     │ • Identity  │
+│ • APIs      │     │ • Tasks     │     │ • Enterprise│
+└─────────────┘     └─────────────┘     └─────────────┘
+      ❌                   ❌                   ❌
+   No agent             No tool              No tool
+   access              access               access
+```
 
 Each protocol has strengths. None work together. Until now.
 
 ## My Approach
 
-### 1. Identity First
-Before connecting protocols, I solved identity:
-- Added AGNTCY Identity to mcpd (PR #154)
-- Cryptographic verification (Ed25519)
-- W3C DIDs: `did:agntcy:mcpd:org:server`
-- Works offline, no OAuth complexity
+### 1. Identity Foundation
 
-### 2. Protocol Bridges
-Built two bridges to prove the concept:
-- **MCP→A2A** (PR #757): Logs identity, enables tool access
-- **MCP→ACP** (PR #774): Exposes identity in metadata
+```
+Step 1: Add Identity to mcpd (PR #154)
 
-### 3. Real Implementation
-Not just ideas - working code:
-- Performance optimized (tool caching, O(1) lookups)
-- Production patterns (async, error handling)
-- Simple to use (see examples/)
+┌──────────────┐
+│     mcpd     │
+├──────────────┤
+│ + Identity   │ ← Added W3C DIDs
+│ + Ed25519    │ ← Cryptographic verification  
+│ + Offline    │ ← No external dependencies
+└──────────────┘
+       ↓
+did:agntcy:mcpd:org:server
+```
+
+Working with the Mozilla AI team on mcpd, I helped add identity support that works for CLI tools and services.
+
+### 2. Mozilla AI's Any-Suite Vision
+
+```
+Mozilla AI Ecosystem:
+
+┌─────────────────────────────────────────┐
+│            Mozilla AI Suite             │
+├─────────────────────────────────────────┤
+│                                         │
+│  ┌──────────┐  ┌──────────┐  ┌──────┐  │
+│  │ any-llm  │  │any-agent │  │ mcpd │  │
+│  │          │  │          │  │      │  │
+│  │ Unified  │←→│ Multi-   │←→│ Tool │  │
+│  │   LLM    │  │ Protocol │  │Daemon│  │
+│  │Interface │  │  Agent   │  │ +ID  │  │
+│  └──────────┘  └────┬─────┘  └──────┘  │
+│                     │                   │
+│                     ↓                   │
+│            Protocol Bridges             │
+│         ┌────────┴────────┐             │
+│         │                 │             │
+│      MCP→A2A          MCP→ACP          │
+│      PR #757          PR #774          │
+│                                         │
+└─────────────────────────────────────────┘
+
+The any-suite provides complete AI infrastructure
+```
+
+Mozilla AI's vision is bigger than just bridges - it's a complete suite:
+- **any-llm**: Unified interface for all LLM providers
+- **any-agent**: Multi-protocol agent framework
+- **mcpd**: Tool lifecycle management with identity
+
+My bridges extend this vision by connecting external protocols.
+
+### 3. Building on the Foundation
+
+```
+How Bridges Fit:
+
+any-agent (Mozilla AI)
+    ├── Native A2A support ✓
+    ├── Native MCP support ✓
+    ├── Future: Native ACP support
+    └── My bridges:
+        ├── MCP→A2A (PR #757)
+        └── MCP→ACP (PR #774)
+```
+
+Built two working bridges that complement Mozilla AI's multi-protocol vision:
+- **MCP→A2A** (PR #757): Makes tools available to agents, logs identity
+- **MCP→ACP** (PR #774): REST access with full identity metadata
+
+### 4. Implementation Focus
+
+```
+Performance Optimizations:
+
+Start: O(n) tool lookup on every request ❌
+  ↓
+Add tool caching at startup 
+  ↓  
+Now: O(1) dictionary lookup ✅
+
+Result: Production-ready performance
+```
+
+Focused on practical implementation:
+- Tool caching for performance
+- Async patterns throughout
+- Simple examples that work
 
 ## Why Identity Matters
 
@@ -63,18 +149,26 @@ Without identity, AI agents are toys. With identity, they're tools businesses ca
 
 ## What This Enables
 
-1. **Today**: Any MCP tool works with any agent protocol
-2. **Tomorrow**: Complete interoperability as protocols evolve
-3. **Future**: Foundation for enterprise AI adoption
+Working together, we can:
+1. **Today**: Help developers use any MCP tool with any agent protocol
+2. **Tomorrow**: Build on this foundation as protocols evolve
+3. **Future**: Make AI agents trustworthy for enterprise adoption
 
-## The Bigger Picture
+## Collaboration Across Communities
 
-I'm contributing to:
-- **Mozilla AI**: 11+ PRs improving any-agent, any-llm, mcpd
-- **Linux Foundation AGNTCY**: Async support for ACP SDK
-- **Community**: Showing how protocols can work together
+I'm grateful to work with:
+- **Mozilla AI team**: For hosting any-agent and mcpd, enabling these bridges
+- **Linux Foundation AGNTCY**: For the identity standards and ACP protocol
+- **Protocol maintainers**: For building these amazing tools
 
-This isn't about one protocol winning. It's about making them all work together so developers can use the best tool for each job.
+My contributions span:
+- 11+ PRs across Mozilla AI repositories
+- Async support for AGNTCY's ACP SDK
+- This proof-of-concept bringing it all together
+
+## The Goal
+
+This isn't about one protocol winning. It's about helping them work together so developers can use the best tool for each job. By collaborating across organizations, we're building better infrastructure for everyone.
 
 ## Next Steps
 
