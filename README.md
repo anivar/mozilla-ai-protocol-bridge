@@ -1,9 +1,9 @@
-# Breaking Protocol Silos: MCP ↔ A2A ↔ ACP Interoperability
+# Protocol Bridges with Enterprise Identity: MCP ↔ A2A ↔ ACP
 
 > **Developer**: Anivar Aravind  
-> **Mission**: Enterprise-grade AI agent infrastructure with cryptographic identity
-> **Innovation**: First to implement verifiable cross-protocol agent interactions
-> **Hub**: Mozilla AI - where all protocols converge for enterprise deployment
+> **Goal**: Help enterprises adopt AI agents with proper identity and audit trails
+> **Approach**: Building bridges between protocols while adding cryptographic verification
+> **Community**: Contributing to Mozilla AI and Linux Foundation AGNTCY
 
 ## Why This Matters
 
@@ -12,11 +12,11 @@ The AI agent ecosystem is fragmented:
 - **A2A** (Google → Linux Foundation): Great for agents, limited tool access
 - **ACP** (AGNTCY/Linux Foundation): Enterprise-ready, but new ecosystem
 
-I'm solving this by building enterprise AI infrastructure that corporations can trust:
-- **Cryptographic identity** for every agent and tool interaction
-- **Audit trails** built into the protocol layer
-- **Compliance-ready** with W3C standards
-- **Zero-trust architecture** where every call is verifiable
+I'm working on making these protocols work together with enterprise needs in mind:
+- Adding cryptographic identity (Ed25519) to existing protocols
+- Building audit trails into the bridge layer
+- Following W3C standards for interoperability
+- Exploring zero-trust patterns for agent interactions
 
 ## Protocol Integration Approach
 
@@ -96,7 +96,7 @@ I'm solving this by building enterprise AI infrastructure that corporations can 
 - Enables high-performance ACP integrations
 - Required for the MCP-ACP bridge to work efficiently
 
-I'm building enterprise-grade AI infrastructure with verifiable identity, async performance, and cross-protocol interoperability.
+These contributions aim to make AI agents more trustworthy and easier to adopt in enterprise environments.
 
 ## Why Not OAuth? The Identity Challenge
 
@@ -225,7 +225,7 @@ Mozilla AI is uniquely positioned as the convergence point:
 - **mcpd**: The MCP daemon that Mozilla maintains, where I added identity support
 - **Community**: Where protocol implementers collaborate on interoperability
 
-My work leverages Mozilla AI's central position to bridge all protocols.
+Working with Mozilla AI's ecosystem provides a unique opportunity to help connect these protocols.
 
 ### 5. Identity Flow Sequence
 
@@ -359,10 +359,10 @@ curl -X POST http://localhost:8090/mcp-bridge/runs/stateless \
 - **Vendor Integration**: Connect AI systems across companies securely
 - **Incident Response**: Complete audit trail when something goes wrong
 
-### Why Enterprises Need This
-- **Not just "AI"**: Enterprise AI with accountability
-- **Not just "secure"**: Cryptographically verifiable
-- **Not just "connected"**: Identity-aware interoperability
+### What This Enables
+- Moving beyond basic AI to include accountability
+- Adding cryptographic verification to existing protocols
+- Connecting systems with identity awareness
 
 ## Getting Started
 
