@@ -66,22 +66,24 @@ I'm solving this with protocol bridges that preserve cryptographic identity acro
 
 ## My Contributions Across Organizations
 
-### Mozilla AI Repository Contributions
+### Mozilla AI Ecosystem Contributions
 
-**[PR #154: AGNTCY Identity in mcpd](https://github.com/mozilla-ai/mcpd/pull/154)**
-- Added cryptographic identity (Ed25519) to MCP servers
-- W3C DID format: `did:agntcy:mcpd:{org}:{server}`
-- Foundation for all protocol bridges
+**Protocol Interoperability (Focus of this POC):**
+- **[PR #154](https://github.com/mozilla-ai/mcpd/pull/154)**: AGNTCY Identity in mcpd - cryptographic identity foundation
+- **[PR #757](https://github.com/mozilla-ai/any-agent/pull/757)**: MCP-to-A2A bridge - protocol interoperability
+- **[PR #774](https://github.com/mozilla-ai/any-agent/pull/774)**: MCP-to-ACP bridge - full identity exposure
 
-**[PR #757: MCP-to-A2A Bridge](https://github.com/mozilla-ai/any-agent/pull/757)**
-- Bridges Anthropic's MCP to Google's A2A protocol
-- Identity preserved for audit (A2A can't transmit it)
-- Performance optimized with tool caching
+**any-agent Framework Improvements:**
+- **[PR #758](https://github.com/mozilla-ai/any-agent/pull/758)**: Fix A2A streaming callback accumulation
+- **[PR #759](https://github.com/mozilla-ai/any-agent/pull/759)**: Improve MCP client lazy initialization
+- **[PR #760](https://github.com/mozilla-ai/any-agent/pull/760)**: Add runtime context parameter for callbacks
+- **[PR #762](https://github.com/mozilla-ai/any-agent/pull/762)**: Implement structured error schema for tools
+- **[PR #763](https://github.com/mozilla-ai/any-agent/pull/763)**: Add reasoning/thinking tokens support
 
-**[PR #774: MCP-to-ACP Bridge](https://github.com/mozilla-ai/any-agent/pull/774)**
-- Bridges MCP to AGNTCY's ACP protocol
-- Full identity exposure via REST metadata
-- Enterprise-ready with W3C standards
+**any-llm Async Infrastructure:**
+- **[PR #272](https://github.com/mozilla-ai/any-llm/pull/272)**: Response conversion utilities (merged)
+- **[PR #254](https://github.com/mozilla-ai/any-llm/pull/254)**: OpenAI custom httpx client support
+- **[PR #255](https://github.com/mozilla-ai/any-llm/pull/255)**: Native SDK providers httpx support
 
 ### Linux Foundation AGNTCY Contribution
 
@@ -90,7 +92,7 @@ I'm solving this with protocol bridges that preserve cryptographic identity acro
 - Enables high-performance ACP integrations
 - Required for the MCP-ACP bridge to work efficiently
 
-This is significant: I'm contributing to both Mozilla AI and Linux Foundation projects to ensure they work together seamlessly.
+I'm actively improving Mozilla AI's entire stack while building bridges to Linux Foundation projects.
 
 ## Why Not OAuth? The Identity Challenge
 
