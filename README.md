@@ -49,20 +49,19 @@ I'm solving this with protocol bridges that preserve cryptographic identity acro
 ## Technical Architecture
 
 ```
-┌─────────────────┐   HTTP/REST    ┌─────────────────┐   MCP Protocol   ┌─────────────────┐
-│   ACP Client    │ ──────────────→ │  MCP-ACP Bridge │ ─────────────────→ │   MCP Server    │
-│                 │                │                 │                   │                 │
-│ • REST API      │ ←────────────── │ • Protocol      │ ←─────────────── │ • Tools         │
-│ • W3C DIDs      │   JSON         │   Translation   │   Tool Results   │ • Resources     │
-│ • Async SDK     │                │ • Identity      │                   │ • Databases     │
-│   (PR #113)     │                │   Verification  │                   │ • APIs          │
-└─────────────────┘                └─────────────────┘                   └─────────────────┘
-        ↑                                    ↑
-        │                                    │
-    My Contributions:                  My Contributions:
-    • PR #113 (AGNTCY)                • PR #154 (mcpd identity)
-    • Async support                    • PR #774 (this bridge)
-    • W3C Identity                    • PR #757 (A2A bridge)
+┌─────────────────┐                ┌─────────────────────┐                ┌─────────────────┐
+│ AGNTCY/LF       │                │    Mozilla AI       │                │   Anthropic    │
+│ ACP Client      │   HTTP/REST    │                     │  MCP Protocol  │   MCP Server   │
+├─────────────────┤ ─────────────→ │  ┌───────────────┐  │ ─────────────→ ├─────────────────┤
+│ • REST API      │                │  │ MCP-ACP Bridge│  │                │ • Tools         │
+│ • W3C DIDs      │ ←───────────── │  │   (PR #774)   │  │ ←───────────── │ • Resources     │
+│ • Async SDK     │   JSON + DID   │  │               │  │  Tool Results  │ • Databases     │
+│   (PR #113)     │                │  │  any-agent    │  │                │ • APIs          │
+└─────────────────┘                │  └───────────────┘  │                └─────────────────┘
+                                   │                     │                          ↑
+                                   │    mcpd identity    │                          │
+                                   │      (PR #154)      │                     Runs via mcpd
+                                   └─────────────────────┘                     (Mozilla AI)
 ```
 
 ## My Contributions Across Organizations
