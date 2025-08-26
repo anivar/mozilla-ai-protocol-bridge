@@ -3,7 +3,7 @@
 > **Developer**: Anivar Aravind  
 > **Mission**: Enterprise-grade AI agent infrastructure with cryptographic identity
 > **Innovation**: First to implement verifiable cross-protocol agent interactions
-> **Focus**: Security, compliance, and audit trails for production AI systems
+> **Hub**: Mozilla AI - where all protocols converge for enterprise deployment
 
 ## Why This Matters
 
