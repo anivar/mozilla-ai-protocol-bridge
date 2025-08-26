@@ -2,6 +2,8 @@
 
 Working implementation of a bridge that lets MCP tools work with ACP's REST API.
 
+📖 **[Read the Vision](VISION.md)** - Why identity-first protocol interoperability matters
+
 ## What This Is
 
 A proof-of-concept showing:
