@@ -83,7 +83,44 @@ Mozilla AI's vision is a unified ecosystem:
 
 My bridges extend this "single interface" philosophy by making protocols work together.
 
-### 3. Building on the Foundation
+### 3. AGNTCY's Internet of Agents
+
+```
+Linux Foundation AGNTCY Ecosystem:
+
+┌─────────────────────────────────────────┐
+│        Internet of Agents (IoA)         │
+├─────────────────────────────────────────┤
+│                                         │
+│  ┌──────────┐  ┌──────────┐  ┌──────┐  │
+│  │   ACP    │  │   OASF   │  │ SLIM │  │
+│  │          │  │          │  │      │  │
+│  │  Agent   │  │ Schema   │  │Secure│  │
+│  │ Connect  │  │Framework │  │ Msg  │  │
+│  │ Protocol │  │          │  │      │  │
+│  └──────────┘  └──────────┘  └──────┘  │
+│                                         │
+│  ┌──────────┐  ┌──────────┐            │
+│  │   DIR    │  │ Identity │            │
+│  │Discovery │  │   W3C    │            │
+│  │          │  │   DIDs   │            │
+│  └──────────┘  └──────────┘            │
+│                                         │
+└─────────────────────────────────────────┘
+
+Enterprise-ready infrastructure for agents
+```
+
+AGNTCY provides the enterprise foundation:
+- **ACP**: REST APIs for agent services
+- **Identity**: W3C DIDs for verification
+- **OASF**: Standardized schemas
+- **DIR**: Agent discovery
+- **SLIM**: Secure messaging
+
+My work bridges Mozilla AI's tools with AGNTCY's enterprise infrastructure. I also contributed async support to the ACP SDK (PR #113), enabling high-performance protocol implementations.
+
+### 4. Building on Both Foundations
 
 ```
 How Bridges Fit:
@@ -101,7 +138,7 @@ Built two working bridges that complement Mozilla AI's multi-protocol vision:
 - **MCP→A2A** (PR #757): Makes tools available to agents, logs identity
 - **MCP→ACP** (PR #774): REST access with full identity metadata
 
-### 4. Implementation Focus
+### 5. Implementation Focus
 
 ```
 Performance Optimizations:
@@ -156,15 +193,24 @@ Working together, we can:
 
 ## Collaboration Across Communities
 
-I'm grateful to work with:
-- **Mozilla AI team**: For hosting any-agent and mcpd, enabling these bridges
-- **Linux Foundation AGNTCY**: For the identity standards and ACP protocol
-- **Protocol maintainers**: For building these amazing tools
+### Mozilla AI
+*"What we're working on:"*
+- **mcpd**: requirements.txt for agentic systems. Manage MCP servers and tools with one config
+- **any-llm**: A single interface to use different LLM providers
+- **any-agent**: A single interface to use and evaluate different agent frameworks
 
-My contributions span:
-- 11+ PRs across Mozilla AI repositories
+### Linux Foundation AGNTCY
+*"Building the Internet of Agents (IoA): an open, interoperable, internet for agent-to-agent collaboration"*
+
+Key projects I work with:
+- **ACP (Agent Connect Protocol)**: REST-based agent communication
+- **OASF**: Open Agentic Schema Framework
+- **Identity**: W3C DID standards for agents
+
+My contributions span both ecosystems:
+- 11+ PRs across Mozilla AI making things work better
 - Async support for AGNTCY's ACP SDK
-- This proof-of-concept bringing it all together
+- This proof-of-concept connecting both worlds
 
 ## The Goal
 
