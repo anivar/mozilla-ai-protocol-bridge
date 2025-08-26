@@ -15,13 +15,13 @@ This project implements a bridge between Mozilla's Model Context Protocol (MCP) 
                     Tools & Resources
                         /              \
                        /                \
-              PR #757 /                  \ This Work
+              PR #757 /                  \ PR #774
           (any-agent) /                    \ (POC)
                      /                      \
                     v                        v
-        A2A (Google)  ←────────────────→  ACP (Linux Foundation)
-       Agent-to-Agent      Future Work     Agent Connect Protocol
-        Protocol           (A2A-ACP)       + W3C Identity Standards
+        A2A (Google LF)                   ACP (AGNTCY LF)
+       Agent-to-Agent                    Agent Connect Protocol
+        Protocol                         + W3C Identity Standards
 ```
 
 **Ecosystem Components:**
@@ -71,10 +71,10 @@ This project implements a bridge between Mozilla's Model Context Protocol (MCP) 
 - **Purpose**: Async client capabilities for ACP SDK
 - **Status**: Open
 
-### This Work: MCP-ACP Bridge
+### [PR #774: MCP-ACP Bridge](https://github.com/mozilla-ai/any-agent/pull/774)
 - **Purpose**: Mozilla MCP to Linux Foundation ACP bridge
 - **Standards**: MCP + ACP + W3C DIDs + Verifiable Credentials
-- **Implementation**: Proof-of-concept with working examples
+- **Implementation**: Production-ready with this POC as reference
 
 ## W3C Standards Implementation
 
@@ -101,6 +101,159 @@ Bridge Layer:
 2. **Credential Issuance**: Create Verifiable Credentials for authorization
 3. **Protocol Translation**: Bridge requests between MCP and ACP with identity verification
 4. **Standards Compliance**: Maintain W3C and foundation specifications
+
+## Identity Integration Across Protocol Bridges
+
+All protocol bridges leverage AGNTCY Identity from mcpd for secure, verifiable tool execution:
+
+### 1. Foundation: mcpd PR #154
+- **Purpose**: Generates cryptographic identity for MCP servers
+- **Format**: `did:agntcy:mcpd:{organization}:{server}`
+- **Example**: `did:agntcy:mcpd:mozilla-ai:github-tools`
+
+### 2. MCP-to-A2A Bridge (PR #757)
+- **Uses**: Identity from mcpd for logging and audit trails
+- **Limitation**: A2A protocol doesn't support metadata, so identity is logged but not transmitted to clients
+- **Benefit**: Complete audit trail for enterprise compliance
+
+### 3. MCP-to-ACP Bridge (PR #774)
+- **Uses**: Identity from mcpd AND exposes it in ACP metadata
+- **Advantage**: ACP clients can verify tool authenticity
+- **Format**: Identity included in agent manifest and tool execution metadata
+
+### 4. Complete Identity Flow
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                    Mozilla AI Ecosystem with Identity                │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                      │
+│  ┌──────────┐    generates     ┌─────────────────────────────┐      │
+│  │   mcpd   │ ───────────────> │ did:agntcy:mcpd:org:server │      │
+│  │  PR #154 │                  │    (W3C DID + Ed25519)      │      │
+│  └──────────┘                  └──────────┬──────────────────┘      │
+│                                           │                          │
+│                                           │ uses                     │
+│                                           ▼                          │
+│                                  ┌─────────────────┐                 │
+│                                  │   MCP Server    │                 │
+│                                  │ (runs with DID) │                 │
+│                                  └────────┬────────┘                 │
+│                                          │                           │
+│                    ┌─────────────────────┴─────────────────────┐     │
+│                    │                                           │     │
+│                    ▼                                           ▼     │
+│  ┌─────────────────────────────┐              ┌─────────────────────┐│
+│  │       any-agent             │              │      any-agent      ││
+│  ├─────────────────────────────┤              ├─────────────────────┤│
+│  │ • Framework for agents      │              │ • Same framework    ││
+│  │ • Uses any-llm internally   │              │ • Uses any-llm      ││
+│  │                             │              │                     ││
+│  │ ┌───────────────────┐       │              │ ┌─────────────────┐ ││
+│  │ │ MCP-A2A Bridge    │       │              │ │ MCP-ACP Bridge  │ ││
+│  │ │    PR #757        │       │              │ │    PR #774      │ ││
+│  │ ├───────────────────┤       │              │ ├─────────────────┤ ││
+│  │ │ • Reads identity  │       │              │ │ • Reads identity│ ││
+│  │ │ • Logs for audit  │       │              │ │ • Exposes in API│ ││
+│  │ │ • Can't transmit  │       │              │ │ • Clients verify│ ││
+│  │ └───────────────────┘       │              │ └─────────────────┘ ││
+│  └──────────┬──────────────────┘              └──────────┬──────────┘│
+│             │                                             │           │
+│             ▼                                             ▼           │
+│  ┌───────────────────┐                        ┌────────────────┐     │
+│  │   A2A Protocol    │                        │  ACP Protocol  │     │
+│  │ (Google/LF)       │                        │ (AGNTCY/LF)    │     │
+│  │                   │                        │                │     │
+│  │ No metadata field │                        │ Full metadata  │     │
+│  │ for identity      │                        │ support         │     │
+│  └───────────────────┘                        └────────────────┘     │
+│             │                                             │           │
+│             ▼                                             ▼           │
+│  ┌─────────────────────────────────────────────────────────────┐     │
+│  │                         any-llm                             │     │
+│  │                    (Common LLM Layer)                       │     │
+│  │  • Unified interface for multiple LLM providers            │     │
+│  │  • Used by any-agent for model interactions                │     │
+│  │  • Supports OpenAI, Anthropic, Google, etc.                │     │
+│  └─────────────────────────────────────────────────────────────┘     │
+│                                                                      │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+### 5. Identity Flow Sequence
+
+```
+Step 1: Identity Generation
+┌──────┐                      ┌──────────┐
+│ User │                      │   mcpd   │
+└──┬───┘                      └────┬─────┘
+   │                               │
+   │ mcpd identity init server     │
+   │─────────────────────────────>│
+   │                               │ generates Ed25519 keys
+   │                               │ creates DID document
+   │<─────────────────────────────│
+   │ did:agntcy:mcpd:org:server   │
+   │                               │
+
+Step 2: MCP Server with Identity
+┌──────────┐                  ┌─────────────┐
+│   mcpd   │                  │ MCP Server  │
+└────┬─────┘                  └──────┬──────┘
+     │                               │
+     │ mcpd run server              │
+     │─────────────────────────────>│
+     │ verifies identity            │
+     │ starts server with DID       │
+     │                               │
+
+Step 3a: MCP-to-A2A Bridge (PR #757)
+┌─────────────┐              ┌──────────────┐              ┌────────┐
+│ MCP Server  │              │ any-agent    │              │  A2A   │
+│  (with DID) │              │ MCP-A2A Bridge│              │ Client │
+└──────┬──────┘              └───────┬──────┘              └───┬────┘
+       │                             │                          │
+       │<────── connect with DID ────│                          │
+       │                             │                          │
+       │────── tools available ─────>│                          │
+       │                             │                          │
+       │                             │<──── request tools ──────│
+       │                             │                          │
+       │                             │ logs: "using identity    │
+       │                             │  did:agntcy:..."         │
+       │                             │                          │
+       │<────── execute tool ────────│                          │
+       │                             │                          │
+       │────── tool result ─────────>│────── result ──────────>│
+       │                             │ (no identity in A2A)     │
+
+Step 3b: MCP-to-ACP Bridge (PR #774)
+┌─────────────┐              ┌──────────────┐              ┌────────┐
+│ MCP Server  │              │ any-agent    │              │  ACP   │
+│  (with DID) │              │ MCP-ACP Bridge│              │ Client │
+└──────┬──────┘              └───────┬──────┘              └───┬────┘
+       │                             │                          │
+       │<────── connect with DID ────│                          │
+       │                             │                          │
+       │────── tools available ─────>│                          │
+       │                             │                          │
+       │                             │<──── GET /agents ────────│
+       │                             │                          │
+       │                             │────── manifest ─────────>│
+       │                             │ {metadata: {             │
+       │                             │   identity_id: "did:..." │
+       │                             │ }}                       │
+       │                             │                          │
+       │<────── execute tool ────────│<──── POST /runs ────────│
+       │                             │                          │
+       │────── tool result ─────────>│────── result + DID ─────>│
+```
+
+This unified identity approach ensures:
+- Single source of truth for identity (mcpd)
+- Consistent identity across all protocols
+- Enterprise-grade security and compliance
+- W3C standards compliance throughout
 
 ## Implementation
 
@@ -200,11 +353,11 @@ tests/
 
 ## Protocol Interoperability Status
 
-| Protocol | Mozilla MCP | Google A2A | Linux Foundation ACP |
-|----------|-------------|-------------|---------------------|
-| **Mozilla MCP** | Native | PR #757 | This Work |
-| **Google A2A** | PR #757 | Native | Future Work |
-| **Linux Foundation ACP** | This Work | Future Work | Native |
+| Protocol | Mozilla MCP | Google A2A (LF) | AGNTCY ACP (LF) |
+|----------|-------------|-----------------|------------------|
+| **Mozilla MCP** | Native | PR #757 | PR #774 |
+| **Google A2A (LF)** | PR #757 | Native | LF Working On |
+| **AGNTCY ACP (LF)** | PR #774 | LF Working On | Native |
 
 ## Current Limitations
 
