@@ -20,8 +20,11 @@ pip install -r requirements.txt
 # Run basic demo
 python examples/basic_demo.py
 
-# Run with identity
+# Run with identity simulation
 python examples/mcpd_integration_demo.py
+
+# Run mcpd REST API demo (agent-factory approach)
+python examples/mcpd_rest_demo.py
 ```
 
 ## How It Works
@@ -70,9 +73,19 @@ The identity appears in API responses for audit trails.
 
 ## Related Work
 
+### Core Protocol Bridges
 - [any-agent PR #757](https://github.com/mozilla-ai/any-agent/pull/757): MCP-to-A2A bridge
 - [any-agent PR #774](https://github.com/mozilla-ai/any-agent/pull/774): MCP-to-ACP bridge  
-- [mcpd PR #154](https://github.com/mozilla-ai/mcpd/pull/154): Identity support
+
+### Identity & Infrastructure
+- [mcpd PR #154](https://github.com/mozilla-ai/mcpd/pull/154): AGNTCY Identity support
+- [agent-factory PR #310](https://github.com/mozilla-ai/agent-factory/pull/310): MCPStdio to mcpd migration
+
+### Agent Improvements
+- [any-agent PR #763](https://github.com/mozilla-ai/any-agent/pull/763): Reasoning tokens support
+- [any-agent PR #762](https://github.com/mozilla-ai/any-agent/pull/762): Tool error schemas
+
+📖 **[Full Contribution List](CONTRIBUTIONS.md)** - See all 22+ PRs across Mozilla AI and AGNTCY
 
 ## License
 
