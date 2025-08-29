@@ -66,6 +66,16 @@ Three Separate Ecosystems:
 │ │                   │     │   (PR #154)   │                       │
 │ └───────────────────┘     └───────┬───────┘                       │
 │                                   │                                 │
+│                                   │ REST API                        │
+│                                   │                                 │
+│                          ┌────────┴─────────┐                      │
+│                          │  MCP Transports  │                      │
+│                          │                  │                      │
+│                          │ • MCPD (REST)    │                      │
+│                          │ • MCPStdio       │                      │
+│                          │ • MCPStreamable  │                      │
+│                          └────────┬─────────┘                      │
+│                                   │                                 │
 └───────────────────────────────────┼─────────────────────────────────┘
                                     │
                           ┌─────────┴─────────┐
@@ -143,6 +153,7 @@ filesystem_tools = create_mcpd_tools(mcpd_url)
 # Benefits: HTTP resilience, proper errors, identity support
 ```
 
+
 ## Complete Mozilla AI + AGNTCY Integration
 
 ```
@@ -160,7 +171,9 @@ filesystem_tools = create_mcpd_tools(mcpd_url)
 │  │  │     any-agent       │◄─┼──┼─────┤    │ Identity │   │  │
 │  │  │                     │  │  │          │  (DIDs)  │   │  │
 │  │  │  • Native A2A      │  │  │          └──────────┘   │  │
-│  │  │  • Native MCP      │  │  │                          │  │
+│  │  │  • Native MCP:     │  │  │                          │  │
+│  │  │    - MCPStdio      │  │  │                          │  │
+│  │  │    - MCPD          │  │  │                          │  │
 │  │  │  • Bridges:        │  │  │                          │  │
 │  │  │    - MCP→A2A #757  │  │  │                          │  │
 │  │  │    - MCP→ACP #774  │  │  │                          │  │
