@@ -88,8 +88,8 @@ Three Separate Ecosystems:
 
 **Solutions Implemented:**
 - MCP tools now accessible to A2A agents (PR #757)
-- MCP tools exposed via REST with identity (PR #774)
-- mcpd manages tools with AGNTCY identity support (PR #154)
+- MCP tools exposed via REST (PR #774)
+- mcpd can generate identity keys (PR #154) - not used yet
 - agent-factory migrated from MCPStdio to mcpd (PR #310)
 
 ## Technical Implementation Journey
@@ -105,15 +105,15 @@ Before mcpd Identity Support:
 └─────────────┘   ?    └─────────────┘
                 Who?
 
-After Identity Header Support:
+After Identity Key Generation:
 ┌─────────────┐        ┌─────────────┐
 │   Agent     │───────►│ MCP Server  │
-└─────────────┘  DID   └─────────────┘
-         did:agntcy:dev:org:server
-         (header only, no verification yet)
+└─────────────┘        └─────────────┘
+         Keys exist on disk only
+         (not sent in requests)
 ```
 
-This created the foundation for future identity tracking and verification.
+This created key storage for future identity implementation.
 
 ### Phase 2: Protocol Bridges (any-agent PRs #757, #774)
 
@@ -139,7 +139,7 @@ Both bridges now support:
 - Custom httpx clients for connection pooling
 - HTTP/2 for better performance
 - Configurable timeouts and headers
-- Identity metadata in manifests (display only, no verification)
+- Identity configuration field (stored but not used)
 
 ### Phase 3: Production Integration (agent-factory PR #310)
 
@@ -198,31 +198,35 @@ filesystem_tools = create_mcpd_tools(mcpd_url)
 │  • any-agent: MCP→A2A bridge (#757), MCP→ACP bridge (#774)    │
 │  • any-agent: Reasoning tokens (#763), Error schemas (#762)   │
 │  • any-llm: httpx client support (#254) - REJECTED            │
-│  • mcpd: AGNTCY identity support (#154)                       │
+│  • mcpd: Identity key generation (#154) - partial             │
 │  • agent-factory: MCPStdio→mcpd migration (#310)              │
 │  • ACP SDK: Async (#113), Python codegen (#110)               │
 │  • OASF: OpenTelemetry (#274), Testing (#270)                 │
 │                                                                │
-│  REJECTED features now in bridges:                            │
-│  • httpx client for connection pooling (#254)                 │
-│  • MCPD transport support (implicit rejection)                │
+│  Features added to bridges after rejection:                   │
+│  • httpx client for connection pooling                        │
+│  • MCPD transport support                                      │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
 ## Key Technical Achievements
 
-### 1. Identity-Ready Architecture
+### 1. Identity Configuration Support
 ```
-Tool Access Before:
-Agent → Tool (Anonymous, Unverified)
+Current State:
+Agent → Tool (Identity string stored in config)
 
-Tool Access With Identity Support (PR #154):
-Agent → DID Header → Tool (Tracked, Not Yet Verified)
-                     ↓
-                Future: Signature Verification
+What's Built:
+- Key generation command in mcpd
+- Identity field in bridge configs
+- Keys saved to disk
+
+What's NOT Built:
+- Headers not sent
+- No signatures
+- No verification
 ```
-Note: Full cryptographic verification pending mcpd PR #154 merge
 
 ### 2. Protocol Translation Layer
 ```python

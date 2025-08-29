@@ -8,7 +8,7 @@ Working implementation of a bridge that lets MCP tools work with ACP's REST API.
 
 A proof-of-concept showing:
 - MCP tools accessible via REST endpoints
-- Identity metadata support (tracking only, verification pending)  
+- Identity configuration field (stored but not used)  
 - Working examples you can run
 - **Advanced HTTP features**: Connection pooling, custom headers, HTTP/2 support via httpx
 
@@ -70,7 +70,7 @@ config = MCPToACPBridgeConfig(
 )
 ```
 
-The identity is stored in bridge metadata (full verification pending mcpd PR #154).
+The identity string is stored in config only.
 
 ## With Advanced HTTP Client
 
@@ -104,7 +104,7 @@ This enables connection reuse, custom timeouts, and better performance.
 - [any-agent PR #774](https://github.com/mozilla-ai/any-agent/pull/774): MCP-to-ACP bridge  
 
 ### Identity & Infrastructure
-- [mcpd PR #154](https://github.com/mozilla-ai/mcpd/pull/154): AGNTCY Identity support
+- [mcpd PR #154](https://github.com/mozilla-ai/mcpd/pull/154): Identity key generation (headers not implemented)
 - [agent-factory PR #310](https://github.com/mozilla-ai/agent-factory/pull/310): MCPStdio to mcpd migration
 
 ### Agent Improvements
