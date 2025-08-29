@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-The AI agent ecosystem was fragmented across three major protocols - MCP (Anthropic), A2A (Google/LF), and ACP (AGNTCY/LF). Each had unique strengths but couldn't interoperate. Through strategic contributions to Mozilla AI and Linux Foundation AGNTCY projects, I built bridges that connect these protocols, enabling developers to use any tool with any agent framework.
+The AI agent ecosystem was fragmented across three major protocols - MCP (Anthropic), A2A (Google/LF), and ACP (AGNTCY/LF). Each had unique strengths but couldn't interoperate. Through strategic contributions to Mozilla AI and Linux Foundation AGNTCY projects, I built bridges that connect these protocols, enabling developers to use any tool with any agent framework, with foundational support for future identity integration.
 
 ## The Journey: Before and After
 
@@ -94,25 +94,26 @@ Three Separate Ecosystems:
 
 ## Technical Implementation Journey
 
-### Phase 1: Identity Foundation (mcpd PR #154)
+### Phase 1: Identity Infrastructure Preparation (mcpd PR #154)
 
-**Problem:** No way to verify which agent or tool was making requests
+**Problem:** No way to track which agent or tool was making requests
 
 ```
-Before mcpd Identity:
+Before mcpd Identity Support:
 ┌─────────────┐        ┌─────────────┐
 │   Agent     │───────►│ MCP Server  │
 └─────────────┘   ?    └─────────────┘
                 Who?
 
-After AGNTCY Identity:
+After Identity Header Support:
 ┌─────────────┐        ┌─────────────┐
 │   Agent     │───────►│ MCP Server  │
 └─────────────┘  DID   └─────────────┘
          did:agntcy:dev:org:server
+         (header only, no verification yet)
 ```
 
-This created the cryptographic trust foundation needed for enterprise adoption.
+This created the foundation for future identity tracking and verification.
 
 ### Phase 2: Protocol Bridges (any-agent PRs #757, #774)
 
@@ -138,7 +139,7 @@ Both bridges now support:
 - Custom httpx clients for connection pooling
 - HTTP/2 for better performance
 - Configurable timeouts and headers
-- Identity tracking via AGNTCY DIDs
+- Identity metadata in manifests (display only, no verification)
 
 ### Phase 3: Production Integration (agent-factory PR #310)
 
@@ -211,14 +212,17 @@ filesystem_tools = create_mcpd_tools(mcpd_url)
 
 ## Key Technical Achievements
 
-### 1. Identity-First Architecture
+### 1. Identity-Ready Architecture
 ```
 Tool Access Before:
 Agent → Tool (Anonymous, Unverified)
 
-Tool Access After:
-Agent → DID → Signature → Tool (Verified, Auditable)
+Tool Access With Identity Support (PR #154):
+Agent → DID Header → Tool (Tracked, Not Yet Verified)
+                     ↓
+                Future: Signature Verification
 ```
+Note: Full cryptographic verification pending mcpd PR #154 merge
 
 ### 2. Protocol Translation Layer
 ```python

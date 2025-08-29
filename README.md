@@ -2,13 +2,13 @@
 
 Working implementation of a bridge that lets MCP tools work with ACP's REST API.
 
-📖 **[Read the Vision](VISION.md)** - Why identity-first protocol interoperability matters
+📖 **[Read the Vision](VISION.md)** - Protocol interoperability with identity support
 
 ## What This Is
 
 A proof-of-concept showing:
 - MCP tools accessible via REST endpoints
-- Identity metadata in API responses  
+- Identity metadata support (tracking only, verification pending)  
 - Working examples you can run
 - **Advanced HTTP features**: Connection pooling, custom headers, HTTP/2 support via httpx
 
@@ -70,7 +70,7 @@ config = MCPToACPBridgeConfig(
 )
 ```
 
-The identity appears in API responses for audit trails.
+The identity is stored in bridge metadata (full verification pending mcpd PR #154).
 
 ## With Advanced HTTP Client
 
