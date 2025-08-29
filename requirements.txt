@@ -11,4 +11,4 @@ starlette>=0.25.0
 
 # Development dependencies (optional)
 pytest>=7.0.0
-httpx>=0.24.0  # for testing HTTP endpoints
+httpx>=0.24.0  # for testing + production HTTP client features (from rejected PR mozilla-ai/any-llm#254)

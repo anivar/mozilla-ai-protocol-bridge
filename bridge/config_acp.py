@@ -1,7 +1,6 @@
 """Configuration for MCP-ACP bridge serving."""
 
 from typing import Optional, Dict, Any
-
 from pydantic import BaseModel, ConfigDict, Field
 
 
@@ -28,7 +27,7 @@ class MCPToACPBridgeConfig(BaseModel):
         )
     """
 
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="forbid", arbitrary_types_allowed=True)
 
     # MCP Configuration
     mcp_command: str = Field(description="Command to start MCP server")
@@ -46,3 +45,6 @@ class MCPToACPBridgeConfig(BaseModel):
     identity_id: Optional[str] = Field(default=None, description="AGNTCY Identity DID")
     version: str = Field(default="1.0.0", description="Version of the bridge")
     organization: str = Field(default="demo-org", description="Organization name")
+    
+    # HTTP Configuration (from rejected PR mozilla-ai/any-llm#254)
+    http_client: Any = Field(default=None, description="Optional httpx.AsyncClient for custom HTTP configuration")

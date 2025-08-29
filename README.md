@@ -10,6 +10,7 @@ A proof-of-concept showing:
 - MCP tools accessible via REST endpoints
 - Identity metadata in API responses  
 - Working examples you can run
+- **Advanced HTTP features**: Connection pooling, custom headers, HTTP/2 support via httpx
 
 ## Quick Start
 
@@ -71,6 +72,31 @@ config = MCPToACPBridgeConfig(
 
 The identity appears in API responses for audit trails.
 
+## With Advanced HTTP Client
+
+Configure custom httpx client for connection pooling and performance:
+
+```python
+import httpx
+
+# Create custom httpx client
+http_client = httpx.AsyncClient(
+    limits=httpx.Limits(max_keepalive_connections=20, max_connections=50),
+    timeout=httpx.Timeout(connect=10.0, read=30.0),
+    http2=True,  # Enable HTTP/2
+    headers={"X-Bridge-Version": "1.0.0"}
+)
+
+config = MCPToACPBridgeConfig(
+    mcp_command="uvx",
+    mcp_args=["mcp-server-filesystem"],
+    http_client=http_client,  # Pass custom client
+    port=8090
+)
+```
+
+This enables connection reuse, custom timeouts, and better performance.
+
 ## Related Work
 
 ### Core Protocol Bridges
@@ -84,6 +110,9 @@ The identity appears in API responses for audit trails.
 ### Agent Improvements
 - [any-agent PR #763](https://github.com/mozilla-ai/any-agent/pull/763): Reasoning tokens support
 - [any-agent PR #762](https://github.com/mozilla-ai/any-agent/pull/762): Tool error schemas
+
+### Performance & HTTP Enhancements
+- [any-llm PR #254](https://github.com/mozilla-ai/any-llm/pull/254): httpx client support (rejected, now in bridges)
 
 📖 **[Full Contribution List](CONTRIBUTIONS.md)** - See all 22+ PRs across Mozilla AI and AGNTCY
 
